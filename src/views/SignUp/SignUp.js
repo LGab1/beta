@@ -15,6 +15,8 @@ import {
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
+import axios from 'axios';
+
 const schema = {
   firstName: {
     presence: { allowEmpty: false, message: 'is required' },
@@ -187,7 +189,18 @@ const SignUp = props => {
 
   const handleSignUp = event => {
     event.preventDefault();
-    history.push('/');
+    var apiBaseUrl = 'http://localhost:4000/api/user';
+    event.preventDefault();
+    axios.post(apiBaseUrl, {
+      firstname: formState.values.firstName,
+      lastname: formState.values.lastName,
+      email: formState.values.email,
+      password: formState.values.password
+    })
+      .then(function (response) { 
+        console.log(response)
+        history.push('/sign-in');
+      });  
   };
 
   const hasError = field =>
